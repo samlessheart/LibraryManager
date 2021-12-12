@@ -1,0 +1,24 @@
+{%extends "books/base.html"%}
+
+{%block content%}
+
+    {%if message%}
+    <p>{{message}}</p>
+    {%endif%}
+    <div>{{object_book}}</div>
+
+<form method="post" action="{% url 'borrow' object_book.id%}">
+    {% csrf_token %}
+    {{form.as_p}}
+    <p><button type="submit" class="btn" id='borrw-btn' >Borrow</button></p>
+</form>
+
+
+
+{%endblock content%}
+
+{% block jscripts %}
+
+    
+
+{% endblock jscripts%}

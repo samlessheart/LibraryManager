@@ -1,0 +1,65 @@
+{%extends "books/base.html"%}
+
+{%block content%}
+
+
+
+<div class="container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Doc id </th>
+                <th scope="col">Book Name</th>
+                <th scope="col">Author</th>
+                <th scope="col">Pages</th>
+                <th scope="col">genre</th>
+                <th scope="col">Available</th>
+                <th scope="col">Publication</th>
+                <th>Add to Wishlist</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%for book in page_obj%}
+            <tr>
+                <th scope="row">{{book.doc_id}}</th>
+                <td>{{book.name}}</td>
+                <td>{{book.author}}</td>
+                <td>{{book.pages}}</td>
+                <td>{{book.get_genre_display}}</td><!--For choice fields get_{model-field}_dispaly-->
+                <td>{{book.in_stock}}</td>
+                <td>{{book.publication}}</td>
+                <td><button title="Add to wishlist" class="btn-primary" id="{{book.id}}">+ </button> </td>
+            </tr>
+            {%endfor%}
+        </tbody>
+    </table>
+</div>
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+        <a href="?page=1">&laquo; first</a>
+        <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">next</a>
+        <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+
+
+
+{%endblock content%}
+
+
+
+{% block jscripts %}
+
+
+
+{% endblock jscripts %}

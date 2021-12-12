@@ -1,0 +1,45 @@
+{%extends "books/base.html"%}
+
+{%block content%}
+    <div class="row">
+        <div>
+            <ul>
+                <li>
+                    <a class="" href="{%url 'signup'%}" >Add a member</a>
+                </li>    
+                <li>
+                  <a class="" href="{%url 'add_book'%}" >Add a Book</a>
+              </li>             
+            </ul>
+        </div>
+        <div class="container">            
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">id No. </th>
+                    <th scope="col">member</th>
+                    <th scope="col">book</th>
+                    <th scope="col">borrow_date</th>
+                    <th scope="col">due_date</th>
+                    <th scope="col">return_date</th>
+                    <th scope="col">due_charges</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    {%for obj in obj_pass%}
+                  <tr>
+                    <th scope="row">{{obj.id}}</th>
+                    <td>{{obj.member}}</td>
+                    <td>{{obj.book}}</td>
+                    <td>{{obj.borrow_date}}</td>
+                    <td>{{obj.due_date}}</td>
+                    <td>{{obj.return_date}}</td>
+                    <td>{{obj.due_charges}}</td>
+                  </tr>
+                 {%endfor%}
+                </tbody>
+              </table>
+        </div>
+    </div>
+{%endblock content%}
+

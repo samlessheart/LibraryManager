@@ -1,0 +1,13 @@
+{%extends "books/base.html"%}
+
+{%block content%}
+
+
+<form class="container" method="post" action="{% url 'signup'%}" >
+    {% csrf_token %}
+    {{ form.as_p }}
+  <p> <button type="submit" class="btn">Sign Up</button></p>
+
+</form>
+
+{%endblock content%}
