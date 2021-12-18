@@ -34,7 +34,9 @@ class Publication(models.Model):
     class Meta:
         ordering = ['-name']
         indexes = [models.Index(fields=['name', ]),]
-
+    
+    def __str__(self):
+        return self.name
 class Book(models.Model):
     doc_id = models.IntegerField(unique=True)
     name = models.CharField(max_length=200, )
