@@ -16,6 +16,9 @@
                 <th scope="col">Available</th>
                 <th scope="col">Publication</th>
                 <th>Add to Wishlist</th>
+                {%if user.is_employee %}
+                <th>Borrow</th>
+                {%endif%}
             </tr>
         </thead>
         <tbody>
@@ -29,6 +32,9 @@
                 <td>{{book.in_stock}}</td>
                 <td>{{book.publication}}</td>
                 <td><button title="Add to wishlist" class="btn-primary" id="{{book.id}}">+ </button> </td>
+                {%if user.is_employee %}
+                <td><a href="{%url 'borrow' book.id%}">issue</a></td>
+                {%endif%}
             </tr>
             {%endfor%}
         </tbody>

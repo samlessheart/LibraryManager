@@ -22,14 +22,14 @@ def dashboard1(request):
     obj_pass = PassBook.objects.all().order_by(F('return_date').desc(nulls_first=True))
     print(obj_pass)
     context= {'obj_pass':obj_pass}
-    return render(request, 'books/dashboard1.html', context=context)
+    return render(request, 'passbook/dashboard1.html', context=context)
 
 @login_required
 def profile(request):
     obj_pass = PassBook.objects.filter(member=request.user).order_by(F('return_date').desc(nulls_first=True) )
     print(obj_pass)
     context= {'obj_pass':obj_pass}
-    return render(request, 'books/profile.html',context=context )
+    return render(request, 'passbook/profile.html',context=context )
 
 
 
@@ -66,5 +66,5 @@ def borrow(request, pk):
                 else:
                     messages.warning(request, 'book is not available') 
             
-    return render(request, 'books/borrow.html', context=context)
+    return render(request, 'passbook/borrow.html', context=context)
 

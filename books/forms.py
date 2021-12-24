@@ -1,6 +1,6 @@
 from django import forms
-from django.forms import (fields, widgets, Textarea, NumberInput, Select)
-from books.models import Book
+from django.forms import (fields, widgets, Textarea, NumberInput, Select, DateField)
+from books.models import Book, Author
 
 
 
@@ -25,4 +25,16 @@ class bookForm(forms.ModelForm):
             'vendor': Textarea(attrs={'rows': 1,'class': 'form-control col-8'}),
         }
     
+
+class authorForm(forms.ModelForm):
+    class Meta:
+        model = Author
+        fields = ['name', 'dob', 'doe', 'detail']
+
+        widgets = {
+            'name': Textarea(attrs={'rows': 1, 'class': 'form-control col-8'}),
+            'dob': NumberInput(attrs={'rows': 1, 'class': 'form-control col-8'}),
+            'doe': NumberInput(attrs={'rows': 1, 'class': 'form-control col-8'}),
+            'detail': Textarea(attrs={'rows': 1, 'class': 'form-control col-8'}),
+        }
     
