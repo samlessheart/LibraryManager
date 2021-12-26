@@ -61,10 +61,9 @@ def add_book(request):
     form = bookForm()
     context = {'form':form}
     if request.method == 'POST':
-        form = bookForm(request.POST)
+        form = bookForm(request.POST)        
         if form.is_valid():
-            print("true")
-            print(f"----{form}----")
+            
             docid = form.cleaned_data['doc_id']
             name = form.cleaned_data['name']
             author = form.cleaned_data['author']
@@ -82,6 +81,8 @@ def add_book(request):
             abook.save()
             messages.success(request, f'{abook.name} is added successfully.')
 
+            return redirect('dashboard')
+
         else:
            messages.warning(request, 'Something went wrong.') 
 
@@ -97,6 +98,8 @@ def add_author(request):
     if request.method == 'POST':
         form = authorForm(request.POST)
         if form.is_valid:
+            print("true")
+            print(f"----{form}----")
             name= form.cleaned_data['name']
             dob= form.cleaned_data['dob']
             doe= form.cleaned_data['doe']
@@ -105,6 +108,7 @@ def add_author(request):
             anauthor = Author.objects.create(name= name, dob= dob, doe= doe, detail= detail)
             anauthor.save()
             messages.success(request, f'{anauthor.name} is added successfully.')
+            return redirect('dashboard')
         else:
              messages.warning(request, 'Something went wrong.')
 

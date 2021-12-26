@@ -21,7 +21,7 @@ class bookForm(forms.ModelForm):
             'genre': Select(attrs={'class': 'form-control col-8'}),
             'tags': Textarea(attrs={'rows': 1,'class': 'form-control col-8'}),
             'published': NumberInput(attrs={'rows': 1,'class': 'form-control col-8'}),
-            'publication': Textarea(attrs={'rows': 1,'class': 'form-control col-8'}),
+            'publication': Select(attrs={'rows': 1,'class': 'form-control col-8'}),
             'vendor': Textarea(attrs={'rows': 1,'class': 'form-control col-8'}),
         }
     
