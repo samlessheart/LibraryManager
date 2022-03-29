@@ -1,12 +1,14 @@
 
+from datetime import datetime
+from email import message
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 from books.decorators import employee_required
-from .models import  PassBook
+from .models import PassBook
 from books.models import Book
 from django.db.models import F
 from django.contrib.auth import get_user_model
-User=get_user_model()
+User = get_user_model()
 from .forms import borrowForm
 from django.contrib import messages
 
@@ -19,9 +21,9 @@ def dashboard(request):
 
 @employee_required
 def dashboard1(request):
-    obj_pass = PassBook.objects.all().order_by(F('return_date').desc(nulls_first=True))
+    obj_pass = PassBook.objects.all().order_by(F('return_date').asc(nulls_first=True))
     print(obj_pass)
-    context= {'obj_pass':obj_pass}
+    context= {'obj_pass': obj_pass}
     return render(request, 'passbook/dashboard1.html', context=context)
 
 @login_required
@@ -49,12 +51,14 @@ def borrow(request, pk):
                 member = User.objects.get(member_id= member)
             except:
                 member = None
-            if member is not None and object_book.in_stock == True:
+            if member is not None and object_book.in_stock == True and member.profile.borrowed_book is None:
                 passentry = PassBook.objects.create(member=member, book = object_book, staff=staff)
                 object_book.in_stock = False
                 object_book.save()
                 member.profile.borrowed_book = object_book
+                print(member.profile.borrowed_book)
                 member.save()
+                print(member.profile.borrowed_book)
                 
                 print (passentry)
                 messages.success(request, f'{object_book} is leased to {member}')
@@ -63,8 +67,33 @@ def borrow(request, pk):
             else:
                 if member is None:
                     messages.warning(request, 'Member Not found.')
+                elif member.profile.borrowed_book is not None:
+                    messages.warning(request, 'Please return the due book before borrowing a new Book.')
                 else:
-                    messages.warning(request, 'book is not available') 
+                    messages.warning(request, 'This book is not available') 
             
     return render(request, 'passbook/borrow.html', context=context)
 
+
+
+@employee_required
+def book_return(request, pk):
+    print('priniting pk pass obj')
+    print(pk)
+    pass_obj = PassBook.objects.get(id=pk)
+    book_obj = Book.objects.get(id = pass_obj.book.id)
+    book_obj.in_stock = True
+    book_obj.save()
+    pass_obj.return_date = datetime.now()
+    pass_obj.complete = True
+    user_obj = pass_obj.member
+    prof_obj = user_obj.profile
+    prof_obj.borrowed_book = None
+    prof_obj.save()
+    user_obj.save()
+    pass_obj.save()
+    
+    messages.success(request, f'{pass_obj.member} has returned the {pass_obj.book.name}')
+
+    return redirect('dashboard')
+    

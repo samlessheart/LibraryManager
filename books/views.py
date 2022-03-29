@@ -75,11 +75,11 @@ def add_book(request):
             publication = form.cleaned_data['publication']
             vendor = form.cleaned_data['vendor']
 
-            abook = Book.objects.create(doc_id= docid, name= name, author=author, 
+            book_obj = Book.objects.create(doc_id= docid, name= name, author=author, 
                             price= price, pages= pages, genre= genre, tags=tags, published= published,
                                 publication= publication, vendor= vendor)
-            abook.save()
-            messages.success(request, f'{abook.name} is added successfully.')
+            book_obj.save()
+            messages.success(request, f'{book_obj.name} is added successfully.')
 
             return redirect('dashboard')
 

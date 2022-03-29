@@ -26,6 +26,7 @@
                     <th scope="col">due_date</th>
                     <th scope="col">return_date</th>
                     <th scope="col">due_charges</th>
+                    <th scope="col">Book Returned</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -37,7 +38,14 @@
                     <td>{{obj.borrow_date}}</td>
                     <td>{{obj.due_date}}</td>
                     <td>{{obj.return_date}}</td>
-                    <td>{{obj.due_charges}}</td>
+                    <td>{{obj.due_charges}}</td> 
+                    {%if obj.complete %}
+                    <td><button type= "button" disabled>
+                      &#10004</button></td> 
+                     {%else%}                                 
+                    <td><button type= "button" class="btn">
+                      <a href="{%url 'book_return' obj.id%}">&#10004</a></button></td> 
+                      {%endif%}                  
                   </tr>
                  {%endfor%}
                 </tbody>

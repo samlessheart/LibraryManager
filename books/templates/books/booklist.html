@@ -32,8 +32,10 @@
                 <td>{{book.in_stock}}</td>
                 <td>{{book.publication}}</td>
                 <td><button title="Add to wishlist" class="btn-primary" id="{{book.id}}">+ </button> </td>
-                {%if user.is_employee %}
-                <td><a href="{%url 'borrow' book.id%}">issue</a></td>
+                {%if user.is_employee%}
+                <td>
+                    {%if book.in_stock%}
+                    <a href="{%url 'borrow' book.id%}">issue</a> {%endif%}</td>
                 {%endif%}
             </tr>
             {%endfor%}
