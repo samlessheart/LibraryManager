@@ -25,7 +25,7 @@ def home(request, ):
 
 def booklist(request, page=1):
     Book_list = Book.objects.all().order_by('doc_id')
-    paginator = Paginator(Book_list, 2)
+    paginator = Paginator(Book_list, 3)
 
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
@@ -41,7 +41,7 @@ def bookdetail(request, pk):
 
 def authorlist(request, page=1):
     author_list = Author.objects.all().order_by('name')
-    paginator = Paginator(author_list, 2)
+    paginator = Paginator(author_list, 4)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
       

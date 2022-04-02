@@ -5,7 +5,7 @@
 
 
 <div class="container">
-    <table class="table">
+    <table class="table table-sm table-bordered">
         <thead>
             <tr>
                 <th scope="col">Doc id </th>
@@ -42,11 +42,11 @@
         </tbody>
     </table>
 </div>
-<div class="pagination">
+<div class="pagination justify-content-end px-4">
     <span class="step-links">
         {% if page_obj.has_previous %}
-        <a href="?page=1">&laquo; first</a>
-        <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        <a class="px-2" href="?page=1">&laquo; first</a>
+        <a class="px-2" href="?page={{ page_obj.previous_page_number }}">previous</a>
         {% endif %}
 
         <span class="current">
@@ -54,8 +54,8 @@
         </span>
 
         {% if page_obj.has_next %}
-        <a href="?page={{ page_obj.next_page_number }}">next</a>
-        <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        <a class="px-2" href="?page={{ page_obj.next_page_number }}">next</a>
+        <a class="px-2" href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
         {% endif %}
     </span>
 </div>

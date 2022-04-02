@@ -11,6 +11,7 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 from .forms import borrowForm
 from django.contrib import messages
+from django.core.paginator import Paginator
 
 @login_required
 def dashboard(request):
@@ -19,14 +20,18 @@ def dashboard(request):
     else:
         return redirect('profile')
 
+@login_required(login_url='/user/login/')
 @employee_required
-def dashboard1(request):
-    obj_pass = PassBook.objects.all().order_by(F('return_date').asc(nulls_first=True))
-    print(obj_pass)
-    context= {'obj_pass': obj_pass}
-    return render(request, 'passbook/dashboard1.html', context=context)
+def dashboard1(request, page=1):
+    obj_pass = PassBook.objects.all().order_by(F('return_date').desc(nulls_first=True))
+    paginator = Paginator(obj_pass, 7)
 
-@login_required
+    page_num = request.GET.get('page')
+    page_obj = paginator.get_page(page_num)
+    
+    return render(request, 'passbook/dashboard1.html', {'page_obj': page_obj})
+
+@login_required(login_url='/user/login/')
 def profile(request):
     obj_pass = PassBook.objects.filter(member=request.user).order_by(F('return_date').desc(nulls_first=True) )
     print(obj_pass)
@@ -55,7 +60,9 @@ def borrow(request, pk):
                 passentry = PassBook.objects.create(member=member, book = object_book, staff=staff)
                 object_book.in_stock = False
                 object_book.save()
-                member.profile.borrowed_book = object_book
+                prof = member.profile
+                prof.borrowed_book = object_book
+                prof.save()
                 print(member.profile.borrowed_book)
                 member.save()
                 print(member.profile.borrowed_book)
