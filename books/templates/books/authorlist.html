@@ -1,9 +1,11 @@
 {%extends "books/base.html"%}
 
 {%block content%}
+<br>
 {% for author in page_obj %}
 
-<div class="container">{{author.name}}
+<div class="container">
+    {{author.name}}
     <small>
         {% if author.dob %}{{author.dob}}-{% endif %}{% if author.doe %}{{author.doe}}{% endif %}
     </small> <br>

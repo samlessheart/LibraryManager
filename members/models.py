@@ -6,6 +6,7 @@ from django.utils.translation import gettext_lazy as _
 from books.models import Book
 
 
+
 # Create your models here.
 
 class MyUserManager(BaseUserManager):
@@ -62,6 +63,9 @@ class MyUser(AbstractBaseUser):
 
     def __str__(self):
         return self.email
+    
+    class Meta:
+      abstract = False
 
 
 
@@ -76,7 +80,7 @@ class Profile(models.Model):
     #pic = models.ImageField(null= True)    
     
     def __str__(self):
-        return self.user
+        return str(self.user)
 
 
 

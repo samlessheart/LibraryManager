@@ -20,8 +20,7 @@ def signup(request):
             phone = form.cleaned_data['phone']
             fname = form.cleaned_data['fname']
             lname = form.cleaned_data['lname']
-            password = form.cleaned_data['password']
-            
+            password = form.cleaned_data['password']            
             user = MyUser.objects.create_user(email, member_id, 
                                             phone=phone, fname=fname, lname=lname, password=password)
             
@@ -67,5 +66,8 @@ def profile(request):
 
 def update(request):
     return render(request, 'members/common.html')
+
+
+
     
 

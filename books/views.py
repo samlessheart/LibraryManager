@@ -25,7 +25,7 @@ def home(request, ):
 
 def booklist(request, page=1):
     Book_list = Book.objects.all().order_by('doc_id')
-    paginator = Paginator(Book_list, 2)
+    paginator = Paginator(Book_list, 3)
 
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
@@ -41,7 +41,7 @@ def bookdetail(request, pk):
 
 def authorlist(request, page=1):
     author_list = Author.objects.all().order_by('name')
-    paginator = Paginator(author_list, 2)
+    paginator = Paginator(author_list, 4)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
       
@@ -75,11 +75,11 @@ def add_book(request):
             publication = form.cleaned_data['publication']
             vendor = form.cleaned_data['vendor']
 
-            abook = Book.objects.create(doc_id= docid, name= name, author=author, 
+            book_obj = Book.objects.create(doc_id= docid, name= name, author=author, 
                             price= price, pages= pages, genre= genre, tags=tags, published= published,
                                 publication= publication, vendor= vendor)
-            abook.save()
-            messages.success(request, f'{abook.name} is added successfully.')
+            book_obj.save()
+            messages.success(request, f'{book_obj.name} is added successfully.')
 
             return redirect('dashboard')
 
