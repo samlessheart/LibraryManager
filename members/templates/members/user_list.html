@@ -1,0 +1,40 @@
+{%extends "books/base.html"%}
+
+{%block content%}
+
+    {%if message%}
+    <p>{{message}}</p>
+    {%endif%}
+    <div class="container">
+    <table class="table table-sm table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">Member id</th>
+                <th scope="col">First name </th>
+                <th scope="col">Last Name</th>                
+                <th scope="col">Phone No.</th>
+                <th scope="col">Books Borrowed</th>                
+            </tr>
+        </thead>
+        <tbody>
+            {%for user in user_obj%}
+            <tr>
+                <th scope="row">{{user.member_id}}</th>
+                <td>{{user.fname}}</td>
+                <td>{{user.lname}}</td>
+                <td>{{user.phone}}</td>
+                <td>{{usr.profile.borrowed_book}}</td>
+            </tr>
+            {%endfor%}
+        </tbody>
+
+    </div>
+
+
+{%endblock content%}
+
+{% block jscripts %}
+
+    
+
+{% endblock jscripts%}

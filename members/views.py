@@ -1,4 +1,6 @@
 from django.shortcuts import redirect, render
+
+from books.decorators import employee_required
 from .forms import SignupForm, profileForm, LoginForm
 from .models import MyUser, Profile
 
@@ -6,6 +8,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from books.decorators import employee_required
 # Create your views here.
 
 
@@ -66,6 +69,17 @@ def profile(request):
 
 def update(request):
     return render(request, 'members/common.html')
+
+
+
+@login_required(login_url='/user/login/')
+@employee_required
+def all_members(request):
+    user_obj = MyUser.objects.filter(is_employee= False, is_admin=False)
+    context = {'user_obj':user_obj}
+    return render(request, 'members/user_list.html', context=context)
+
+
 
 
 

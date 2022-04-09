@@ -1,6 +1,7 @@
 
 from datetime import datetime
 from email import message
+from multiprocessing import context
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 from books.decorators import employee_required
@@ -13,7 +14,7 @@ from .forms import borrowForm
 from django.contrib import messages
 from django.core.paginator import Paginator
 
-@login_required
+@login_required(login_url='/user/login/')
 def dashboard(request):
     if request.user.is_employee== True:
         return redirect('dashboard1')
@@ -41,7 +42,7 @@ def profile(request):
 
 
 
-
+@login_required(login_url='/user/login/')
 @employee_required
 def borrow(request, pk):
     form = borrowForm()
@@ -82,7 +83,7 @@ def borrow(request, pk):
     return render(request, 'passbook/borrow.html', context=context)
 
 
-
+@login_required(login_url='/user/login/')
 @employee_required
 def book_return(request, pk):
     print('priniting pk pass obj')
@@ -103,4 +104,4 @@ def book_return(request, pk):
     messages.success(request, f'{pass_obj.member} has returned the {pass_obj.book.name}')
 
     return redirect('dashboard')
-    
+

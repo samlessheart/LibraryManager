@@ -55,7 +55,7 @@ def authordetail(request, pk):
 
 
 
-@login_required
+@login_required(login_url='/user/login/')
 @employee_required
 def add_book(request):
     form = bookForm()
@@ -90,7 +90,7 @@ def add_book(request):
 
 
 
-@login_required
+@login_required(login_url='/user/login/')
 @employee_required
 def add_author(request):
     form = authorForm()
