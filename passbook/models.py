@@ -30,5 +30,7 @@ class PassBook(models.Model):
     def due_charges(self):
         if self.due_date < datetime.date.today() and self.complete==False:
             return  (datetime.date.today()-self.due_date).days
+        elif self.complete == True and self.due_date < self.return_date:
+            return (self.return_date - self.due_date).days
         else:
             return 0

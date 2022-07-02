@@ -4,8 +4,8 @@
 <br>
 {% for author in page_obj %}
 
-<div class="container">
-    {{author.name}}
+<div class="container"> <a href="{%url 'author_detail' author.id 1%}">
+    {{author.name}} </a>
     <small>
         {% if author.dob %}{{author.dob}}-{% endif %}{% if author.doe %}{{author.doe}}{% endif %}
     </small> <br>

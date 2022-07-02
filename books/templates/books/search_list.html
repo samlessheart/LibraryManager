@@ -1,10 +1,22 @@
 {%extends "books/base.html"%}
 
 {%block content%}
-{%for object in page_obj%}
 
-    <div class="container">object.name</div>
+<div class="pagination justify-content-end px-4">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+        <a class="px-2" href="?page=1">&laquo; first</a>
+        <a class="px-2" href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
 
-{%endfor%}
-    
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+        <a class="px-2" href="?page={{ page_obj.next_page_number }}">next</a>
+        <a class="px-2" href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
 {%endblock content%}

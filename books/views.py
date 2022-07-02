@@ -48,9 +48,14 @@ def authorlist(request, page=1):
     return render(request, 'books/authorlist.html', {'page_obj': page_obj})
 
 
-def authordetail(request, pk):
-    context = {'object':get_object_or_404(Author, pk)}
-    return render(request, 'books/authordetail.html', context=context)
+def author_detail(request, pk, page = 1):
+    context = {'an_author':get_object_or_404(Author, pk)}
+    book_list = Book.objects.filter(author = pk)
+    paginator = Paginator(book_list, 4)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    context = {'page_obj':page_obj}
+    return render(request, 'books/author_detail.html', context=context)
 
 
 
@@ -84,7 +89,7 @@ def add_book(request):
             return redirect('dashboard')
 
         else:
-           messages.warning(request, 'Something went wrong.') 
+           messages.warning(request, 'Something went wrong. Contact sam..!') 
 
     return render(request, 'books/add_book.html', context)
 
@@ -115,9 +120,15 @@ def add_author(request):
     return render(request, 'books/add_author.html', context)
 
 
-def search_book(request, qs):
-    books_obj = Book.objects.filter(name__icontains = qs)
-    authur_obj = Author.objects.filter(name__icontains = qs)
+def search_book(request):
+    books_obj = Book.objects.filter(name__icontains = "a") 
+    #authur_obj = Author.objects.filter(name__icontains = qs)
+    
+    paginator = Paginator(books_obj, 4)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, 'books/search_list.html', {'page_obj': page_obj})
 
 
 
