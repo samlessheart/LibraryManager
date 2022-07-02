@@ -48,13 +48,15 @@ def authorlist(request, page=1):
     return render(request, 'books/authorlist.html', {'page_obj': page_obj})
 
 
-def author_detail(request, pk, page = 1):
-    context = {'an_author':get_object_or_404(Author, pk)}
+def author_detail(request, pk):
+    context = {'an_author':Author.objects.get(id=pk)}
+    print(context)
     book_list = Book.objects.filter(author = pk)
     paginator = Paginator(book_list, 4)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    context = {'page_obj':page_obj}
+    context['page_obj'] = page_obj
+    print(context)
     return render(request, 'books/author_detail.html', context=context)
 
 
