@@ -70,17 +70,17 @@ class MyUser(AbstractBaseUser):
 
 
 
-class Profile(models.Model):
-    user = models.OneToOneField(MyUser, on_delete=models.CASCADE, related_name='profile', blank=True, null=True,)
-    wishlist = models.ManyToManyField(Book, blank=True,  null=True,)
-    borrowed_book = models.ForeignKey(Book, blank=True, null=True, on_delete=models.SET_NULL, related_name='Borrowed_Book')
-    dob = models.DateField(blank=True, null=True)
-    # premium = models.BooleanField(default=False)
-    # second_book= models.ForeignKey(Book, blank=True, null=True, on_delete=models.SET_NULL, related_name='second_Book')
-    # pic = models.ImageField(null= True)    
+# class Profile(models.Model):
+#     user = models.OneToOneField(MyUser, on_delete=models.CASCADE, related_name='profile', blank=True, null=True,)
+#     wishlist = models.ManyToManyField(Book, blank=True,  null=True,)
+#     borrowed_book = models.ForeignKey(Book, blank=True, null=True, on_delete=models.SET_NULL, related_name='Borrowed_Book')
+#     dob = models.DateField(blank=True, null=True)
+#     # premium = models.BooleanField(default=False)
+#     # second_book= models.ForeignKey(Book, blank=True, null=True, on_delete=models.SET_NULL, related_name='second_Book')
+#     # pic = models.ImageField(null= True)    
     
-    def __str__(self):
-        return str(self.user)
+#     def __str__(self):
+#         return str(self.user)
 
 
 

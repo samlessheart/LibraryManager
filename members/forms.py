@@ -4,7 +4,7 @@ from django.db import models
 from django.forms import fields, widgets
 from django.forms import Textarea
 from django.forms.widgets import PasswordInput, TextInput
-from .models import MyUser, Profile 
+from .models import MyUser #, Profile 
 from django.contrib.auth.forms import UserCreationForm
 
 
@@ -37,12 +37,12 @@ class LoginForm(forms.Form):
 
         
 
-class profileForm(forms.ModelForm):
-    class Meta:
-        model = Profile
-        fields = ('dob',)
+# class profileForm(forms.ModelForm):
+#     class Meta:
+#         model = Profile
+#         fields = ('dob',)
 
-        labels = {'dob':"Your Date of Birth", }
+#         labels = {'dob':"Your Date of Birth", }
 
 
 
