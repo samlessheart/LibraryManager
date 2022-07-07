@@ -11,8 +11,8 @@ from books.models import Book
 
 
 class PassBook(models.Model):
-    member = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True,)
-    book = models.ForeignKey(Book, on_delete=models.SET_NULL, null=True,)
+    member = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True)
+    book = models.ForeignKey(Book, on_delete=models.SET_NULL, null=True, blank=True)
     staff = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, 
                                 limit_choices_to={'is_employee': True}, related_name="staff")
 

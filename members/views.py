@@ -1,7 +1,7 @@
 from django.shortcuts import redirect, render
 
 from books.decorators import employee_required
-from .forms import SignupForm, profileForm, LoginForm
+from .forms import SignupForm, LoginForm, profileForm
 from .models import MyUser, Profile
 
 from django.contrib.auth.forms import AuthenticationForm
