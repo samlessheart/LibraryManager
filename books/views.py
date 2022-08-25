@@ -1,3 +1,4 @@
+from multiprocessing import context
 from django.conf import settings
 from django.core import paginator
 from django.shortcuts import redirect, render, get_object_or_404
@@ -94,6 +95,33 @@ def add_book(request):
            messages.warning(request, 'Something went wrong. Contact sam..!') 
 
     return render(request, 'books/add_book.html', context)
+
+
+
+@login_required(login_url='/user/login/')
+@employee_required
+def edit_book(request, pk):
+    context = {} 
+    book_obj = Book.objects.get(id = pk)
+    form = bookForm(request.POST or None, instance=book_obj )
+    if form.is_valid():
+        form.save()
+        messages.success(request, f'{book_obj.name} is updated successfully.') 
+       
+    context['form'] = form
+    return render(request, 'books/edit_book.html', context)
+
+
+@login_required(login_url='/user/login/')
+@employee_required
+def delete_book(request, pk):
+    book_obj = Book.objects.get(id = pk)
+    book_name = book_obj.name
+    book_obj.delete()
+    messages.success(request, f'{book_obj.name} is deleted successfully.')    
+    return redirect('home', )
+    
+    
 
 
 

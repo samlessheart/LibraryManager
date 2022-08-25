@@ -43,8 +43,27 @@ def profile(request):
 
 
 @login_required(login_url='/user/login/')
-@employee_required
 def borrow(request, pk):
+    member = request.user
+    object_book = Book.objects.get(id=pk)
+    if object_book.in_stock == True and member.profile.borrowed_book is None:
+
+        passentry = PassBook.objects.create(member=member, book = object_book)
+        object_book.in_stock = False
+        object_book.save()
+        prof = member.profile
+        prof.borrowed_book = object_book
+        prof.save()
+        print(member.profile.borrowed_book)
+        member.save()
+        print(member.profile.borrowed_book)
+        
+        print (passentry)
+        messages.success(request, f'{object_book} is leased to {member}')
+        return redirect('booklist', 1)
+
+
+    '''
     form = borrowForm()
     object_book = Book.objects.get(id=pk)
     context = {'object_book':object_book, 'form':form}
@@ -81,10 +100,9 @@ def borrow(request, pk):
                     messages.warning(request, 'This book is not available') 
             
     return render(request, 'passbook/borrow.html', context=context)
-
+'''
 
 @login_required(login_url='/user/login/')
-@employee_required
 def book_return(request, pk):
     print('priniting pk pass obj')
     print(pk)

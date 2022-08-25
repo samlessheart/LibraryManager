@@ -72,7 +72,7 @@ class MyUser(AbstractBaseUser):
 
 class Profile(models.Model):
     user = models.OneToOneField(MyUser, on_delete=models.CASCADE, related_name='profile', blank=True, null=True,)
-    wishlist = models.ManyToManyField(Book, blank=True,)
+    wishlist = models.ManyToManyField(Book, blank=True, related_name='wish_profile')
     borrowed_book = models.ForeignKey(Book, blank=True, null=True, on_delete=models.SET_NULL, related_name='profile')
     dob = models.DateField(blank=True, null=True)
     # premium = models.BooleanField(default=False)

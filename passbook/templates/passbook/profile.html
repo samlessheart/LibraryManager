@@ -1,36 +1,46 @@
 {%extends "books/base.html"%}
 
 {%block content%}
-    <div class="container"> <p>Welcome {{user.fname}}</p></div>
-    <div class="container"> 
-        <div>{{user.email}}</div>
-        <div>{{user.phone}}</div>
-      <h4>My Wishlist</h4>
-      <div>{{user.profile.wishlist}}</div>
-      <h4>Books Borrowed</h4>
-        <table class="table">
-            <thead>
-              <tr>
-                <th scope="col">id No. </th>
-                <th scope="col">book</th>
-                <th scope="col">borrow_date</th>
-                <th scope="col">due_date</th>
-                <th scope="col">return_date</th>
-                <th scope="col">due_charges</th>
-              </tr>
-            </thead>
-            <tbody>
-                {%for obj in obj_pass%}
-              <tr>
-                <th scope="row">{{obj.id}}</th>
-                <td>{{obj.book}}</td>
-                <td>{{obj.borrow_date}}</td>
-                <td>{{obj.due_date}}</td>
-                <td>{{obj.return_date}}</td>
-                <td>{{obj.due_charges}}</td>
-              </tr>
-             {%endfor%}
-            </tbody>
-          </table>
-    </div>
+<div class="container">
+  <p>Welcome {{user.fname}}</p>
+</div>
+<div class="container">
+  <div>{{user.email}}</div>
+  <div>{{user.phone}}</div>
+  {% comment %} <h4>My Wishlist</h4> {% endcomment %}
+  {% comment %} <div>{{user.profile.wishlist}}</div> {% endcomment %}
+  <h4>Books Borrowed</h4>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">id No. </th>
+        <th scope="col">book</th>
+        <th scope="col">borrow_date</th>
+        <th scope="col">due_date</th>
+        <th scope="col">return_date</th>
+        <th scope="col">due_charges</th>
+        <th scope="col">Book Returned</th>
+      </tr>
+    </thead>
+    <tbody>
+      {%for obj in obj_pass%}
+      <tr>
+        <th scope="row">{{obj.id}}</th>
+        <td>{{obj.book}}</td>
+        <td>{{obj.borrow_date}}</td>
+        <td>{{obj.due_date}}</td>
+        <td>{{obj.return_date}}</td>
+        <td>{{obj.due_charges}}</td>
+        {%if obj.complete %}
+        <td><button type="button" disabled>
+            &#10004</button></td>
+        {%else%}
+        <td><button type="button" class="btn">
+            <a href="{%url 'book_return' obj.id%}">&#10004</a></button></td>
+        {%endif%}
+      </tr>
+      {%endfor%}
+    </tbody>
+  </table>
+</div>
 {%endblock content%}

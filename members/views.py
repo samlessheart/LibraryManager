@@ -26,10 +26,12 @@ def signup(request):
             password = form.cleaned_data['password']            
             user = MyUser.objects.create_user(email, member_id, 
                                             phone=phone, fname=fname, lname=lname, password=password)
-            
+            user.is_active = True
+            user.save()
             prof_obj = Profile()
             prof_obj.user = user
             prof_obj.save()
+            
             messages.success(request, f'Member is added with {member_id}')
             return redirect('home')
     return render(request, 'members/signup.html', {'form':form})

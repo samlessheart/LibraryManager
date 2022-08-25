@@ -18,8 +18,13 @@
                 <th scope="col">Publication</th>
                 <th>Add to Wishlist</th>
                 {%if user.is_employee %}
-                <th>issue Book</th>
+                <th>Edit Books</th>
+                
+                <th>Delete Book</th>
+                {%else%}
+                <th>Borrow Book</th>
                 {%endif%}
+                
             </tr>
         </thead>
         <tbody>
@@ -33,11 +38,19 @@
                 <td>{{book.in_stock}}</td>
                 <td>{{book.publication}}</td>
                 <td><button title="Add to wishlist" class="btn-primary" id="{{book.id}}">+ </button> </td>
+
                 {%if user.is_employee%}
+                <td>                   
+                    <a href="{%url 'edit_book' book.id%}">Edit- {{book.id}}</a></td>
+                   
                 <td>
+
                     {%if book.in_stock%}
-                    <a href="{%url 'borrow' book.id%}">issue</a> {%endif%}</td>
-                {%endif%}
+                    
+                    <a href="{%url 'delete_book' book.id%}">Delete</a> </td> {%endif%}
+                    {%else%}
+                    <td> <a href="{%url 'borrow' book.id%}">Borrow</a> </td> 
+                    {%endif%}
             </tr>
             {%endfor%}
         </tbody>
