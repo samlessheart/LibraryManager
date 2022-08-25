@@ -102,6 +102,7 @@ def borrow(request, pk):
         book.save()
         passentry = PassBook.objects.create(member=user, book = book)
         passentry.save()
+        return Response(status = status.HTTP_204_NO_CONTENT)
 
 
 @api_view(['POST'])
@@ -117,7 +118,7 @@ def return_book(request, pk):
         prof_obj.borrowed_book = None
         prof_obj.save()
         pass_obj.save()
-        return Response()
+        return Response(status = status.HTTP_204_NO_CONTENT)
 
 
 @api_view(['GET'])
@@ -125,4 +126,5 @@ def passbook(request):
     user = request.user
     pass_obj = PassBook.objects.filter(member = user)
     pass_obj_ser = PassbookSerializers(pass_obj, many = True)
+    return Response(pass_obj_ser.data)
 
